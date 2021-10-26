@@ -21,7 +21,16 @@ export class PostService {
     return post;
   }
 
-  async createPost(createPostDto: CreatePostDto): Promise<Post> {
+  createPost(createPostDto: CreatePostDto): Promise<Post> {
     return this.postsRepository.createPost(createPostDto);
+  }
+
+  async deletePost(id: string): Promise<void> {
+    const post = await this.postsRepository.findOne({ id });
+    if (!post) {
+      throw new NotFoundException(`Post with ID "${id}" not found`);
+    }
+
+    await this.postsRepository.delete(id);
   }
 }
