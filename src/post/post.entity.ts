@@ -8,12 +8,12 @@ export class Post {
   @Column()
   post: string;
 
-  @Column()
+  @Column({ nullable: true })
   author: string;
 
   @Column()
   created_at: Date;
 
-  @Column()
+  @Column({ nullable: true })
   updated_at: Date;
 }
