@@ -6,7 +6,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db',
-      entities: [__dirname + '/**/*.entity.ts'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     UserModule,
