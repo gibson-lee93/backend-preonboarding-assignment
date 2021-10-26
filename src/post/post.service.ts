@@ -33,4 +33,14 @@ export class PostService {
 
     await this.postsRepository.delete(id);
   }
+
+  async updatePost(id: string, post: string): Promise<Post> {
+    const fourm = await this.getPostById(id);
+
+    fourm.post = post;
+    fourm.updated_at = new Date();
+    await this.postsRepository.save(fourm);
+
+    return fourm;
+  }
 }
