@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreatePostDto } from './dto/create-post.dto';
 import { Post } from './post.entity';
 import { PostsRepository } from './posts.repository';
 
@@ -18,5 +19,9 @@ export class PostService {
     }
 
     return post;
+  }
+
+  async createPost(createPostDto: CreatePostDto): Promise<Post> {
+    return this.postsRepository.createPost(createPostDto);
   }
 }
