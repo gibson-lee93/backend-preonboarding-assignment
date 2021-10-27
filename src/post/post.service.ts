@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -16,8 +12,8 @@ export class PostService {
     private postsRepository: PostsRepository,
   ) {}
 
-  async getPostById(id: string): Promise<Post> {
-    const post = await this.postsRepository.findOne({ id });
+  async getPostById(id: string, user: User): Promise<Post> {
+    const post = await this.postsRepository.findOne({ id, user });
 
     if (!post) {
       throw new NotFoundException(`Post with ID "${id}" not found`);
@@ -40,8 +36,8 @@ export class PostService {
     await this.postsRepository.delete(id);
   }
 
-  async updatePost(id: string, post: string): Promise<Post> {
-    const fourm = await this.getPostById(id);
+  async updatePost(id: string, post: string, user: User): Promise<Post> {
+    const fourm = await this.getPostById(id, user);
 
     fourm.post = post;
     fourm.updated_at = new Date();

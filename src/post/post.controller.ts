@@ -22,8 +22,8 @@ export class PostController {
   constructor(private postService: PostService) {}
 
   @Get('/:id')
-  getPostById(@Param('id') id: string): Promise<Forum> {
-    return this.postService.getPostById(id);
+  getPostById(@Param('id') id: string, @GetUser() user: User): Promise<Forum> {
+    return this.postService.getPostById(id, user);
   }
 
   @Post()
@@ -43,8 +43,9 @@ export class PostController {
   updatePost(
     @Param('id') id: string,
     @Body() updatePostDto: UpdatePostDto,
+    @GetUser() user: User,
   ): Promise<Forum> {
     const { post } = updatePostDto;
-    return this.postService.updatePost(id, post);
+    return this.postService.updatePost(id, post, user);
   }
 }
