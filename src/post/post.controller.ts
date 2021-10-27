@@ -39,7 +39,7 @@ export class PostController {
   createPost(
     @Body() createPostDto: CreatePostDto,
     @GetUser() user: User,
-  ): Promise<Forum> {
+  ): Promise<{ data: Forum }> {
     return this.postService.createPost(createPostDto, user);
   }
 

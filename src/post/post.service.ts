@@ -29,7 +29,10 @@ export class PostService {
     return post;
   }
 
-  createPost(createPostDto: CreatePostDto, user: User): Promise<Post> {
+  createPost(
+    createPostDto: CreatePostDto,
+    user: User,
+  ): Promise<{ data: Post }> {
     return this.postsRepository.createPost(createPostDto, user);
   }
 
