@@ -12,6 +12,10 @@ export class PostService {
     private postsRepository: PostsRepository,
   ) {}
 
+  getPosts(): Promise<Post[]> {
+    return this.postsRepository.getPosts();
+  }
+
   async getPostById(id: string, user: User): Promise<Post> {
     const post = await this.postsRepository.findOne({ id, user });
 

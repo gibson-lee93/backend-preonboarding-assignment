@@ -5,6 +5,12 @@ import { Post } from './post.entity';
 
 @EntityRepository(Post)
 export class PostsRepository extends Repository<Post> {
+  async getPosts(): Promise<Post[]> {
+    const query = this.createQueryBuilder('post');
+    const posts = query.getMany();
+    return posts;
+  }
+
   async createPost(createPostDto: CreatePostDto, user: User): Promise<Post> {
     const { post } = createPostDto;
 

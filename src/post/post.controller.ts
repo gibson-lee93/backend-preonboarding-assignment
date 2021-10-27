@@ -16,10 +16,15 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Post as Forum } from './post.entity';
 import { PostService } from './post.service';
 
-@Controller('post')
+@Controller('posts')
 @UseGuards(AuthGuard())
 export class PostController {
   constructor(private postService: PostService) {}
+
+  @Get()
+  getPosts(): Promise<Forum[]> {
+    return this.postService.getPosts();
+  }
 
   @Get('/:id')
   getPostById(@Param('id') id: string, @GetUser() user: User): Promise<Forum> {
