@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity';
 import { CreatePostDto } from './dto/create-post.dto';
+import { GetPostsFilterDto } from './dto/get-posts-filter.dto';
 import { Post } from './post.entity';
 import { PostsRepository } from './posts.repository';
 
@@ -12,8 +13,10 @@ export class PostService {
     private postsRepository: PostsRepository,
   ) {}
 
-  getPosts(): Promise<Post[]> {
-    return this.postsRepository.getPosts();
+  getPosts(
+    filterDto: GetPostsFilterDto,
+  ): Promise<{ count: number; data: Post[] }> {
+    return this.postsRepository.getPosts(filterDto);
   }
 
   async getPostById(id: string, user: User): Promise<Post> {
@@ -26,11 +29,14 @@ export class PostService {
     return post;
   }
 
-  createPost(createPostDto: CreatePostDto, user: User): Promise<Post> {
+  createPost(
+    createPostDto: CreatePostDto,
+    user: User,
+  ): Promise<{ data: Post }> {
     return this.postsRepository.createPost(createPostDto, user);
   }
 
-  async deletePost(id: string, user: User): Promise<void> {
+  async deletePost(id: string, user: User): Promise<{ message: string }> {
     const post = await this.postsRepository.findOne({ id, user });
 
     if (!post) {
@@ -38,15 +44,20 @@ export class PostService {
     }
 
     await this.postsRepository.delete(id);
+    return { message: 'Successfully deleted' };
   }
 
-  async updatePost(id: string, post: string, user: User): Promise<Post> {
-    const fourm = await this.getPostById(id, user);
+  async updatePost(
+    id: string,
+    post: string,
+    user: User,
+  ): Promise<{ data: Post }> {
+    const forum = await this.getPostById(id, user);
 
-    fourm.post = post;
-    fourm.updated_at = new Date();
-    await this.postsRepository.save(fourm);
+    forum.post = post;
+    forum.updated_at = new Date();
+    await this.postsRepository.save(forum);
 
-    return fourm;
+    return { data: forum };
   }
 }
