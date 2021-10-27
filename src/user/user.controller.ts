@@ -17,7 +17,7 @@ export class UserController {
   @HttpCode(200)
   signIn(
     @Body() userCredentialsDto: UserCredentialsDto,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ message: string; accessToken: string }> {
     return this.userService.signIn(userCredentialsDto);
   }
 }
