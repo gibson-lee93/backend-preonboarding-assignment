@@ -35,8 +35,8 @@ export class PostController {
   }
 
   @Delete('/:id')
-  deletePost(@Param('id') id: string): Promise<void> {
-    return this.postService.deletePost(id);
+  deletePost(@Param('id') id: string, @GetUser() user: User): Promise<void> {
+    return this.postService.deletePost(id, user);
   }
 
   @Patch('/:id')
