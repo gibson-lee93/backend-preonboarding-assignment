@@ -36,7 +36,7 @@ export class PostService {
     return this.postsRepository.createPost(createPostDto, user);
   }
 
-  async deletePost(id: string, user: User): Promise<void> {
+  async deletePost(id: string, user: User): Promise<{ message: string }> {
     const post = await this.postsRepository.findOne({ id, user });
 
     if (!post) {
@@ -44,6 +44,7 @@ export class PostService {
     }
 
     await this.postsRepository.delete(id);
+    return { message: 'Successfully deleted' };
   }
 
   async updatePost(
