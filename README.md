@@ -64,6 +64,7 @@ curl --location --request POST 'http://localhost:3000/user/signup' \
     "error": "Bad Request"
 }
 ```
+***
 
 #### Sign In (로그인)
 - Method: POST
@@ -93,6 +94,8 @@ curl --location --request POST 'http://localhost:3000/user/signin' \
     "error": "Unauthorized"
 }
 ```
+
+***
 
 ### Post(게시물)
 #### Create Post (글 작성)
@@ -138,6 +141,7 @@ curl --location --request POST 'http://localhost:3000/posts' \
     "message": "Unauthorized"
 }
 ```
+***
 
 #### Update Post (글 수정)
 - Method: PATCH
@@ -191,6 +195,7 @@ curl --location --request PATCH 'http://localhost:3000/posts/6719b4bf-39d9-4dc6-
     "error": "Not Found"
 }
 ```
+***
 
 #### Delete Post (글 삭제)
 - Method: DELETE
@@ -224,6 +229,7 @@ curl --location --request DELETE 'http://localhost:3000/posts/6719b4bf-39d9-4dc6
     "error": "Not Found"
 }
 ```
+***
 
 #### Get A Post by ID (아이디로 글 하나 읽기)
 - Method: GET
@@ -261,6 +267,7 @@ curl --location --request GET 'http://localhost:3000/posts/9701bbf7-030c-48fc-96
     "error": "Not Found"
 }
 ```
+***
 
 #### Get All Posts (전체 글 일기)
 - Method: GET
