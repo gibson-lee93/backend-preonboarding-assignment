@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../user/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Post {
@@ -8,7 +10,7 @@ export class Post {
   @Column()
   post: string;
 
-  @Column({ nullable: true })
+  @Column()
   author: string;
 
   @Column()
@@ -16,4 +18,8 @@ export class Post {
 
   @Column({ nullable: true })
   updated_at: Date;
+
+  @ManyToOne((_type) => User, (user) => user.posts, { eager: false })
+  @Exclude({ toPlainOnly: true })
+  user: User;
 }
