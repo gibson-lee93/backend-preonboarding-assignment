@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../user/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Post {
@@ -16,4 +17,7 @@ export class Post {
 
   @Column({ nullable: true })
   updated_at: Date;
+
+  @ManyToOne((_type) => User, (user) => user.posts, { eager: false })
+  user: User;
 }
