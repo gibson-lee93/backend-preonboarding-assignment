@@ -9,6 +9,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from '../user/get-user.decorator';
+import { User } from '../user/user.entity';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post as Forum } from './post.entity';
@@ -25,8 +27,11 @@ export class PostController {
   }
 
   @Post()
-  createPost(@Body() createPostDto: CreatePostDto): Promise<Forum> {
-    return this.postService.createPost(createPostDto);
+  createPost(
+    @Body() createPostDto: CreatePostDto,
+    @GetUser() user: User,
+  ): Promise<Forum> {
+    return this.postService.createPost(createPostDto, user);
   }
 
   @Delete('/:id')
