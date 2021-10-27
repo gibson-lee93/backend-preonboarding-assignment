@@ -2,13 +2,30 @@ import { User } from '../user/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post } from './post.entity';
+import { GetPostsFilterDto } from './dto/get-posts-filter.dto';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(Post)
 export class PostsRepository extends Repository<Post> {
-  async getPosts(): Promise<Post[]> {
+  async getPosts(filterDto: GetPostsFilterDto): Promise<Post[]> {
+    const { limit, offset } = filterDto;
+
     const query = this.createQueryBuilder('post');
-    const posts = query.getMany();
-    return posts;
+
+    if (limit) {
+      query.limit(Number(limit));
+    }
+
+    if (offset) {
+      query.offset(Number(offset));
+    }
+
+    try {
+      const posts = await query.getMany();
+      return posts;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   async createPost(createPostDto: CreatePostDto, user: User): Promise<Post> {
