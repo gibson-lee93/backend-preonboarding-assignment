@@ -7,7 +7,9 @@ import { InternalServerErrorException } from '@nestjs/common';
 
 @EntityRepository(Post)
 export class PostsRepository extends Repository<Post> {
-  async getPosts(filterDto: GetPostsFilterDto): Promise<Post[]> {
+  async getPosts(
+    filterDto: GetPostsFilterDto,
+  ): Promise<{ count: number; data: Post[] }> {
     const { limit, offset } = filterDto;
 
     const query = this.createQueryBuilder('post');
@@ -22,7 +24,11 @@ export class PostsRepository extends Repository<Post> {
 
     try {
       const posts = await query.getMany();
-      return posts;
+      return {
+        count: posts.length,
+        data: [...posts],
+      };
+      // return posts;
     } catch (error) {
       throw new InternalServerErrorException();
     }

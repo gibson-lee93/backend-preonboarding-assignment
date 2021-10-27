@@ -13,7 +13,9 @@ export class PostService {
     private postsRepository: PostsRepository,
   ) {}
 
-  getPosts(filterDto: GetPostsFilterDto): Promise<Post[]> {
+  getPosts(
+    filterDto: GetPostsFilterDto,
+  ): Promise<{ count: number; data: Post[] }> {
     return this.postsRepository.getPosts(filterDto);
   }
 

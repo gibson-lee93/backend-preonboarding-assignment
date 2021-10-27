@@ -24,7 +24,9 @@ export class PostController {
   constructor(private postService: PostService) {}
 
   @Get()
-  getPosts(@Query() filterDto: GetPostsFilterDto): Promise<Forum[]> {
+  getPosts(
+    @Query() filterDto: GetPostsFilterDto,
+  ): Promise<{ count: number; data: Forum[] }> {
     return this.postService.getPosts(filterDto);
   }
 
