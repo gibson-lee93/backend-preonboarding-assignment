@@ -53,7 +53,7 @@ export class PostController {
     @Param('id') id: string,
     @Body() updatePostDto: UpdatePostDto,
     @GetUser() user: User,
-  ): Promise<Forum> {
+  ): Promise<{ data: Forum }> {
     const { post } = updatePostDto;
     return this.postService.updatePost(id, post, user);
   }
